@@ -81,12 +81,17 @@ function installSystem()
     // Solicite informações de conexão com o banco de dados
     $dbConfig = getDatabaseCredentials();
     $extractPath = $dbConfig['localDir'];
+    $extractPath_ = str_replace('\\', '/', $extractPath);
     // Baixe e extraia os arquivos do GitHub
     downloadAndExtractZip($config['github_link'], $extractPath);
 
 
     // Alterar Nome do Sistema
     alterarLinhaArquivo($extractPath . 'conf\\sistema.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'INFO\'][\'SISTEMA_NOME\']', $dbConfig['nomeSistema']);
+    alterarLinhaArquivo($extractPath . 'conf\\sistema.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'GERAL\'][\'NOME\']', $dbConfig['nomeSistema']);
+    // Alterar Caminho do Sistema
+    alterarLinhaArquivo($extractPath . 'conf\\sistema.def.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'GERAL\'][\'LOCAL\']', $extractPath_);
+
 
     print_r($dbConfig);
     die(__FILE__ . ' > ' . __LINE__);

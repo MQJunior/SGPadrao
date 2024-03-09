@@ -15,37 +15,18 @@
  * @category Sistema
  */
 
-error_reporting(E_ALL);
+//error_reporting(E_ALL);
+$SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] = 'D:/Desenvolvimento/SGPadrao/'; // Define o local onde o sistema está sendo executado
+$SISTEMA['INCLUDES']['DIR']['LIB'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'lib/'; // Define o endereço da LIB
+$SISTEMA['INCLUDES']['DIR']['CONFIG'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'conf/'; // Define o endereço do Diretório conf
+$SISTEMA['INCLUDES']['DIR']['DEF'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'def/'; // Define o endereço do Diretório def - definições e/ou constantes
+$SISTEMA['INCLUDES']['CONFIG']['SISTEMA'] = $SISTEMA['INCLUDES']['DIR']['CONFIG'] . 'sistema.conf.php'; // Arquivo de configuração Padrão
 
-/**
- * @var string $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] - Define o local onde o sistema est� sendo executado;
- */
-$SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] = 'D:/Desenvolvimento/SGPadrao/';
+//$SISTEMA['INCLUDES']['CLASSES']['ARQUIVO'] = $SISTEMA['INCLUDES']['DIR']['LIB'].'class.arquivo.lib.php'; // Define a LIB que gerencia arquivos
+$SISTEMA['INCLUDES']['CLASSES']['GENESIS_LIB'] = $SISTEMA['INCLUDES']['DIR']['LIB'] . 'class.debug.lib.php'; // Define a LIB que gerencia arquivos
+$SISTEMA['INCLUDES']['CLASSES']['CONEXAODB'] = $SISTEMA['INCLUDES']['DIR']['LIB'] . 'class.conexao.lib.php'; // Define a LIB que gerencia Banco de Dados
 
-/**
- * @var string $SISTEMA['INCLUDES']['DIR']['LIB'] - Define o endereco da LIB;
- */
-$SISTEMA['INCLUDES']['DIR']['LIB'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'lib/';
-/**
- * @var string $SISTEMA['INCLUDES']['DIR']['CONFIG'] - Define o endereco do Diretorio conf;
- */
-$SISTEMA['INCLUDES']['DIR']['CONFIG'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'conf/';
-/**
- * @var string $SISTEMA['INCLUDES']['DIR']['DEF'] - Define o endereco do Diretorio def - definicoes e/ou constantes;
- */
-$SISTEMA['INCLUDES']['DIR']['DEF'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'def/';
-/** @var string $SISTEMA['INCLUDES']['CONFIG']['ARQUIVO'][0] - sistema.conf.php Arquivo de configura��o Padr�o; */
-$SISTEMA['INCLUDES']['CONFIG']['SISTEMA'] = $SISTEMA['INCLUDES']['DIR']['CONFIG'] . 'sistema.conf.php';
-
-/** @var string $SISTEMA['INCLUDES']['CLASSES']['ARQUIVO'] - Define a LIB que gerencia arquivos; */
-//$SISTEMA['INCLUDES']['CLASSES']['ARQUIVO'] = $SISTEMA['INCLUDES']['DIR']['LIB'].'class.arquivo.lib.php';
-/** @var string $SISTEMA['INCLUDES']['CLASSES']['CONEXAODB'] - Define a LIB que gerencia Banco de Dados; */
-$SISTEMA['INCLUDES']['CLASSES']['GENESIS_LIB'] = $SISTEMA['INCLUDES']['DIR']['LIB'] . 'class.debug.lib.php';
-$SISTEMA['INCLUDES']['CLASSES']['CONEXAODB'] = $SISTEMA['INCLUDES']['DIR']['LIB'] . 'class.conexao.lib.php';
-
-
-/** @var string $SISTEMA['INCLUDES']['FUNCOES'] - Define o local do arquivo de fun��es b�sicas; */
-$SISTEMA['INCLUDES']['FUNCOES'][0] = $SISTEMA['INCLUDES']['DIR']['LIB'] . 'funcoes.lib.php';
+$SISTEMA['INCLUDES']['FUNCOES'][0] = $SISTEMA['INCLUDES']['DIR']['LIB'] . 'funcoes.lib.php'; // Define o local do arquivo de funções básicas
 
 require_once($SISTEMA['INCLUDES']['DIR']['CONFIG'] . 'sistema.conf.php');
 
