@@ -88,7 +88,8 @@ function installSystem()
 
 
     print_r($dbConfig);
-    die(__FILE__ . ' > ' . __LINE__);
+    die(__FILE__ . ' > Implementar aqui < ' . __LINE__);
+    
 
 
     echo "Sistema instalado com sucesso!\n";
