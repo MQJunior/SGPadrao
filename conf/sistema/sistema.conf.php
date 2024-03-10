@@ -1,23 +1,28 @@
 <?php
-/**
-* @file sistema.conf.php
-* @name sistema
-* @desc
-*   Seta-se as Tabelas para o processamento, Tabela do Sistema, Tabela de Configuração dos Backup's, Tabela de Usuários do sistema
-*
-* @author     Márcio Queiroz Jr <mqjunior@gmail.com>
-* @version    0.0.0 
-* @copyright  Copyright © 2006, Márcio Queiroz Jr.
-* @package    sistema
-* @subpackage Config
-* @todo       
-*   Descricao todo
-*
-* @date 2018-04-02  v. 0.0.0
-*
+/*
+{
+    "file": "sistema.conf.php",
+    "local": "conf/sistema",
+    "author": {
+        "name": "MÃ¡rcio Queiroz Jr",
+        "email": "mqjunior@gmail.com"
+    },
+    "version": "1.0.0",
+    "package":  "SGPadrao",
+    "subpackage": "Sistema",
+    "category": "Config",
+    "description": "Seta-se as Tabelas para o processamento, Tabela do Sistema, Tabela de ConfiguraÃ§Ãµes dos Backup's, Tabela de UsuÃ¡rios do sistema",
+    "created": "2018-04-02",
+    "dependencies": [
+    ],
+    "modifications": [
+    ],
+    "tags": [
+    ]
+}
 */
 
-/* CONFIGURAÇÃO DO BANCO DE DADOS */ 
+/* CONFIGURAï¿½ï¿½O DO BANCO DE DADOS */
 $this->SISTEMA_['ENTIDADE']['SISTEMA']['CONF']['DATABASE'] = $this->SISTEMA_['CONFIG']['SISTEMA']['DATABASE'];
 /* NOME DA TABELA DA ENTIDADE NO BANCO DE DADOS */
 $this->SISTEMA_['ENTIDADE']['SISTEMA']['CONF']['DATABASE']['TBL_SISTEMA'] = 'TBL_SISTEMA';
@@ -28,6 +33,3 @@ $this->SISTEMA_['ENTIDADE']['SISTEMA']['CONF']['DATABASE']['TBL_BACKUP'] = 'TBL_
 
 /* TABELA USUARIO NO BANCO DE DADOS - RELACIONADA  */
 $this->SISTEMA_['ENTIDADE']['SISTEMA']['CONF']['DATABASE']['TBL_USUARIO'] = $this->SISTEMA_['CONFIG']['USUARIO']['DATABASE']['ENTIDADE_DB'];
-
-
-?>

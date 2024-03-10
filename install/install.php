@@ -1,5 +1,6 @@
 <?php
 
+$gitHubLink = 'https://github.com/MQJunior/SGPadrao/archive/refs/heads/main.zip';
 function downloadAndExtractZip($url, $extractPath)
 {
     echo "\n Baixando Arquivos...";
@@ -30,9 +31,10 @@ function getDatabaseCredentials()
 {
     echo "Por favor, forneça as informações de configuração:\n";
     $nomeSistema = readline("Nome do Sistema: ");
-    $localDir = readline("Local: \"" . __DIR__ . "\\\" <enter> ");
+    $tmp_LocalDir = dirname(__DIR__);
+    $localDir = readline("Local: \"" . $tmp_LocalDir . "\\\" <enter> ");
     if ($localDir == "")
-        $localDir = __DIR__ . "\\";
+        $localDir = $tmp_LocalDir . "\\";
     $host = readline("Host do banco de dados: ");
     $username = readline("Usuário do banco de dados: ");
     $password = readline("Senha do banco de dados: ");
@@ -68,22 +70,14 @@ function alterarLinhaArquivo($caminhoArquivo, $conteudoLinha, $novoValor)
 
 function installSystem()
 {
-    // Carregue as configurações do arquivo JSON
-    $configFile = 'config.json';
-    $config = json_decode(file_get_contents($configFile), true);
-
-    if ($config === null) {
-        die("Erro ao carregar as configurações do arquivo JSON.\n");
-    }
-
-    // Diretório para extrair os arquivos
+    global $gitHubLink;
 
     // Solicite informações de conexão com o banco de dados
     $dbConfig = getDatabaseCredentials();
     $extractPath = $dbConfig['localDir'];
     $extractPath_ = str_replace('\\', '/', $extractPath);
     // Baixe e extraia os arquivos do GitHub
-    downloadAndExtractZip($config['github_link'], $extractPath);
+    downloadAndExtractZip($gitHubLink, $extractPath);
 
 
     // Alterar Nome do Sistema
