@@ -12,13 +12,6 @@ Este é um sistema desenvolvido para facilitar a criação, gerenciamento e cont
 - **Sessões Seguras**: Implemente e gerencie sessões de usuário de forma segura e eficiente.
 - **Gerenciamento de Arquivos**: Manipule arquivos de forma eficaz, realizando operações de upload, download e exclusão.
 
-## Pré-requisitos
-
-- Ambiente de desenvolvimento local ou servidor web configurado.
-- PHP 7.x ou superior.
-- MySQL/MariaDB ou outro banco de dados compatível.
-- Composer instalado para gerenciamento de dependências.
-
 ## Uso
 
 1. Faça login com suas credenciais ou crie uma nova conta de usuário.
