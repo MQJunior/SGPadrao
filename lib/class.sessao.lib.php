@@ -59,12 +59,12 @@ class Sessao
 
 
     $tmpSID = null;
-    if (isset($_REQUEST['SID'])) {
+    if (isset ($_REQUEST['SID'])) {
       $tmpSID = $_REQUEST['SID'];
     }
 
     if (is_null($tmpSID))
-      if (isset($_REQUEST['API_KEY'])) {
+      if (isset ($_REQUEST['API_KEY'])) {
         $tmpApiKey = $_REQUEST['API_KEY'];
         $tmpSID = $this->ApiKeyToSID($tmpApiKey);
       }
@@ -106,7 +106,7 @@ class Sessao
       unset($this->SISTEMA_['EXECUTAR']['COMANDO']['PARAMETROS']);
       $this->SISTEMA_['EXECUTAR']['COMANDO']['ENTIDADE'] = $this->SISTEMA_['CONFIG']['SISTEMA']['ENTIDADEPADRAO'];
       $this->SISTEMA_['EXECUTAR']['COMANDO']['ACAO'] = $this->SISTEMA_['CONFIG']['SISTEMA']['ACAOPADRAO'];
-      if ((isset($_REQUEST['SysEntidade'])) && (isset($_REQUEST['SysEntidadeAcao']))) {
+      if ((isset ($_REQUEST['SysEntidade'])) && (isset ($_REQUEST['SysEntidadeAcao']))) {
         if (
           ($_REQUEST['SysEntidade'] == $this->SISTEMA_['CONFIG']['SISTEMA']['ENTIDADELOGIN']) &&
           ($_REQUEST['SysEntidadeAcao'] == $this->SISTEMA_['CONFIG']['SISTEMA']['ACAOLOGIN'])
@@ -114,7 +114,7 @@ class Sessao
           $this->SISTEMA_['EXECUTAR']['COMANDO']['ENTIDADE'] = $_REQUEST['SysEntidade'];
           $this->SISTEMA_['EXECUTAR']['COMANDO']['ACAO'] = $_REQUEST['SysEntidadeAcao'];
         } else {
-          die(__LINE__ . ' - ' . __FILE__ . ' \n==> NOT SID - SET Entidade = ' . $_REQUEST['SysEntidade'] . '\n Acao= ' . $_REQUEST['SysEntidadeAcao']);
+          die (__LINE__ . ' - ' . __FILE__ . ' \n==> NOT SID - SET Entidade = ' . $_REQUEST['SysEntidade'] . '\n Acao= ' . $_REQUEST['SysEntidadeAcao']);
           unset($_REQUEST);
         }
       } else {
@@ -131,7 +131,7 @@ class Sessao
       if ($this->getExpirado()) {
         $this->FecharSessao($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO']);
         unset($this->SISTEMA_['SESSAO']['CLIENTE']);
-        die('Sessao Expirada! > ' . __FILE__ . ' > ' . __LINE__);
+        die ('Sessao Expirada! > ' . __FILE__ . ' > ' . __LINE__);
       }
       $this->GravaUltimaModificacao();
 
@@ -188,20 +188,20 @@ class Sessao
 
     // $this->SISTEMA_['SESSAO']['STATUS']['AUTENTICADO'] = $this->getAutenticado();
 
-    if (isset($this->SISTEMA_['SESSAO']['STATUS']['AUTENTICADO'])) {
+    if (isset ($this->SISTEMA_['SESSAO']['STATUS']['AUTENTICADO'])) {
       if ($this->SISTEMA_['SESSAO']['STATUS']['AUTENTICADO']) {
 
 
         // Existe alguma Sessao Aberta para este Usuario
         $this->getIDSessaoAbertaUsuario();
         // Caso Exista, a Sessao expirou?
-        if (isset($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO']))
+        if (isset ($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO']))
           if ($this->getExpirado()) {
             $this->FecharSessao($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO']);
             unset($this->SISTEMA_['SESSAO']['CLIENTE']);
           }
 
-        if (!isset($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO'])) {
+        if (!isset ($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO'])) {
           $this->set("USUARIO_ID", $this->SISTEMA_['SESSAO']['USUARIO']['CODIGO']);
           $this->set("USUARIO_NOME", $this->SISTEMA_['SESSAO']['USUARIO']['NOME']);
           $this->setSID();
@@ -209,7 +209,7 @@ class Sessao
 
         } else {
           // Gravar Modificacao
-          if (isset($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO'])) {
+          if (isset ($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO'])) {
             $this->GravaUltimaModificacao();
             // die('Gravar Modificacao');
           }
@@ -230,7 +230,7 @@ class Sessao
    */
   public function is_set($p_chave)
   {
-    return isset($_SESSION[$this->Nome][$p_chave]);          # Retorna True ou False caso a variavel tenha sido setada
+    return isset ($_SESSION[$this->Nome][$p_chave]);          # Retorna True ou False caso a variavel tenha sido setada
   }
   /**
    * Obt�m-se o ID da sessao aberta pelo Usuario
@@ -262,7 +262,7 @@ class Sessao
     if (is_array($tmp_ConexaoDB->Data)) {
 
       if ($tmp_ConexaoDB->Data != "") {
-        if ((isset($tmp_ConexaoDB->Data[0])) and (is_array($tmp_ConexaoDB->Data[0]))) {
+        if ((isset ($tmp_ConexaoDB->Data[0])) and (is_array($tmp_ConexaoDB->Data[0]))) {
           if ($tmp_ConexaoDB->Data[0]['SESSAO_UID'] == !null) {
             $this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_UID'] = $tmp_ConexaoDB->Data[0]['SESSAO_UID'];
             $this->SISTEMA_['SESSAO']['CLIENTE']['DATAINICIO'] = $tmp_ConexaoDB->Data[0]['DATAINICIO'];
@@ -285,7 +285,7 @@ class Sessao
   private function getDadosSessao()
   {
 
-    if (isset($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_UID'])) {
+    if (isset ($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_UID'])) {
       $tmp_ConexaoDB = $this->DataBaseLink;
       $tmp_cfg_bd = $this->SISTEMA_['CONFIG']['SESSAO']['DATABASE'];
       $tmp_SQL = "select
@@ -298,7 +298,9 @@ class Sessao
        " . $tmp_cfg_bd['ENTIDADE_DB'] . ".IPCLIENTE,
        " . $tmp_cfg_bd['ENTIDADE_DB'] . ".DATAINICIO,
        " . $tmp_cfg_bd['ENTIDADE_DB'] . ".DATAMODIFICACAO,
-       " . $tmp_cfg_bd['ENTIDADE_DB'] . ".DATAFIM
+       " . $tmp_cfg_bd['ENTIDADE_DB'] . ".DATAFIM,
+       " . $tmp_cfg_bd['ENTIDADE_DB'] . ".MULTI_ACESSO,
+       " . $tmp_cfg_bd['ENTIDADE_DB'] . ".EXP_INFINITA
       from
           " . $tmp_cfg_bd['ENTIDADE_DB'] . "
       join " . $tmp_cfg_bd['ENTIDADE_USUARIO'] . " on " . $tmp_cfg_bd['ENTIDADE_DB'] . ".USUARIO = " . $tmp_cfg_bd['ENTIDADE_USUARIO'] . ".CODIGO
@@ -323,11 +325,15 @@ class Sessao
             $this->SISTEMA_['SESSAO']['DATABASE']['DATA']['DATAINICIO'] = $tmp_ConexaoDB->Data[0]['DATAINICIO'];
             $this->SISTEMA_['SESSAO']['DATABASE']['DATA']['DATAMODIFICACAO'] = $tmp_ConexaoDB->Data[0]['DATAMODIFICACAO'];
             $this->SISTEMA_['SESSAO']['DATABASE']['DATA']['DATAFIM'] = $tmp_ConexaoDB->Data[0]['DATAFIM'];
+            $this->SISTEMA_['SESSAO']['DATABASE']['DATA']['MULTI_ACESSO'] = $tmp_ConexaoDB->Data[0]['MULTI_ACESSO'];
+            $this->SISTEMA_['SESSAO']['DATABASE']['DATA']['EXP_INFINITA'] = $tmp_ConexaoDB->Data[0]['EXP_INFINITA'];
             $this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_UID'] = $tmp_ConexaoDB->Data[0]['SESSAO_UID'];
             $this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_CODIGO'] = $tmp_ConexaoDB->Data[0]['CODIGO'];
             $this->SISTEMA_['SESSAO']['CLIENTE']['DATAINICIO'] = $tmp_ConexaoDB->Data[0]['DATAINICIO'];
             $this->SISTEMA_['SESSAO']['CLIENTE']['DATAMODIFICACAO'] = $tmp_ConexaoDB->Data[0]['DATAMODIFICACAO'];
             $this->SISTEMA_['SESSAO']['CLIENTE']['DATAFIM'] = $tmp_ConexaoDB->Data[0]['DATAFIM'];
+            $this->SISTEMA_['SESSAO']['CLIENTE']['MULTI_ACESSO'] = $tmp_ConexaoDB->Data[0]['MULTI_ACESSO'];
+            $this->SISTEMA_['SESSAO']['CLIENTE']['EXP_INFINITA'] = $tmp_ConexaoDB->Data[0]['EXP_INFINITA'];
             $this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'] = $tmp_ConexaoDB->Data[0]['USUARIO'];
             $this->set('CODIGO', $this->SISTEMA_['SESSAO']['DATABASE']['DATA']['CODIGO']);
             $this->set('DATAINICIO', $this->SISTEMA_['SESSAO']['DATABASE']['DATA']['DATAINICIO']);
@@ -430,13 +436,18 @@ class Sessao
    */
   public function getExpirado()
   {
-
+    $tmpResult = false;
     $tmpUltimoEvento = strtotime($this->SISTEMA_['SESSAO']['CLIENTE']['DATAMODIFICACAO']);
     $tmpTempoExpiracao = $this->SISTEMA_['CONFIG']['SESSAO']['GERAL']['TEMPO_EXPIRACAO'] * 60;
     $TempoFinal = $tmpUltimoEvento + $tmpTempoExpiracao;
 
 
-    return($TempoFinal < time()) ? true : false;       # Calcula o tempo e retorna se a Sessão est� expirada
+    if ($TempoFinal < time())
+      $tmpResult = true;
+    if (isset ($this->SISTEMA_['SESSAO']['CLIENTE']['EXP_INFINITA']))
+      if ($this->SISTEMA_['SESSAO']['CLIENTE']['EXP_INFINITA'] == '1')
+        $tmpResult = false;
+    return $tmpResult;
 
   }
   /**
@@ -563,10 +574,10 @@ class Sessao
   private function setSID()
   {
     $tmp_SID = "";
-    if (isset($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_UID']))
+    if (isset ($this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_UID']))
       $tmp_SID = $this->SISTEMA_['SESSAO']['CLIENTE']['SESSAO_UID'];
 
-    if ((isset($_REQUEST['SID'])) && ($tmp_SID == ""))
+    if ((isset ($_REQUEST['SID'])) && ($tmp_SID == ""))
       $tmp_SID = $_REQUEST['SID'];
 
     if ($tmp_SID == "") {
@@ -596,7 +607,7 @@ class Sessao
   private function getIP()
   {
     if ($this->SISTEMA_['TERMINAL']['CLIENTE']['TIPO'] == 0) {
-      if (isset($_SERVER['REMOTE_ADDR'])) {
+      if (isset ($_SERVER['REMOTE_ADDR'])) {
         $tmp_IPCliente = $_SERVER['REMOTE_ADDR'];
       } else {
         $tmp_IPCliente = "127.0.0.1";
@@ -696,7 +707,7 @@ class Sessao
   private function setNome()
   {
     if ($this->Nome == '')
-      die("� Necess�rio informar o nome da Sessão.");       # Verifica se o nome foi setado
+      die ("� Necess�rio informar o nome da Sessão.");       # Verifica se o nome foi setado
     session_name($this->Nome);         # Seta-se o nome da Sessão
   }
   /**
@@ -830,7 +841,7 @@ class Sessao
     $this->SISTEMA_['TERMINAL']['CLIENTE']['TIPO'] = $tmp_TipoSaida;
     $this->SISTEMA_['TERMINAL']['CLIENTE']['USERAGENT'] = $tmp_Agente;
     if ($tmp_TipoSaida == 0) {
-      if (isset($_SERVER['REMOTE_ADDR'])) {
+      if (isset ($_SERVER['REMOTE_ADDR'])) {
         $this->SISTEMA_['TERMINAL']['CLIENTE']['CLIENTE_NOME'] = $_SERVER['REMOTE_ADDR'];
       } else {
         $this->SISTEMA_['TERMINAL']['CLIENTE']['CLIENTE_NOME'] = "127.0.0.1";

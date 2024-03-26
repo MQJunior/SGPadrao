@@ -187,8 +187,7 @@ class sistema
       header("Cache-Control: post-check=0, pre-check=0", false);
       header("Pragma: no-cache");
       //$SAIDA_Sistema = GerarXMLAjax($SAIDA_Sistema);
-
-      $SAIDA_Sistema = GerarJSONAjax($SAIDA_Sistema);
+      (isset($this->SISTEMA_['SAIDA']['FORMULARIO'])) ? $SAIDA_Sistema = GerarJSONAjax('', $this->SISTEMA_['SAIDA']['FORMULARIO']) : $SAIDA_Sistema = GerarJSONAjax($SAIDA_Sistema);
     } else {
       header("Content-Type: text/html; charset=ISO-8859-1", true);
       $SAIDA_Sistema = $SAIDA_Sistema;

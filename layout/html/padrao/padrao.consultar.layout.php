@@ -1,49 +1,49 @@
 <?php
 /**
-* @file padrao.consultar.layout.php
-* @name padrao.consultar
-* @desc
-*   Layout para o formulário de consulta
-*
-* @author     Márcio Queiroz Jr <mqjunior@gmail.com>
-* @version    0.0.0 
-* @copyright  Copyright © 2006, Márcio Queiroz Jr.
-* @package    padrao
-* @subpackage Layout
-* @todo       
-*   Descricao todo
-*
-* @date 2018-02-22  v. 0.0.0
-*
-*/
+ * @file padrao.consultar.layout.php
+ * @name padrao.consultar
+ * @desc
+ *   Layout para o formulï¿½rio de consulta
+ *
+ * @author     Mï¿½rcio Queiroz Jr <mqjunior@gmail.com>
+ * @version    0.0.0 
+ * @copyright  Copyright ï¿½ 2006, Mï¿½rcio Queiroz Jr.
+ * @package    padrao
+ * @subpackage Layout
+ * @todo       
+ *   Descricao todo
+ *
+ * @date 2018-02-22  v. 0.0.0
+ *
+ */
 
 // -------------------- CAPTURA DE DADOS -----------------//
-/* Verifica os campos obrigatórios e seta-se os mesmo como required */
+/* Verifica os campos obrigatï¿½rios e seta-se os mesmo como required */
 $EntidadeCampos = $EntidadePadraoCampos;
 
-/* Captura as Variaveis que serão exibidas */
-foreach ($EntidadeCampos as $tmpValor){
-  $tmpVar = "VAR_PADRAO_".$tmpValor['NOME'];
+/* Captura as Variaveis que serï¿½o exibidas */
+foreach ($EntidadeCampos as $tmpValor) {
+  $tmpVar = "VAR_PADRAO_" . $tmpValor['NOME'];
   $$tmpVar = $this->SISTEMA_['ENTIDADE']['PADRAO']['VARS'][$tmpValor['NOME']];
 }
 
-// -------------------- MANIPULAÇÃO -----------------//
+// -------------------- MANIPULAï¿½ï¿½O -----------------//
 /* Formata o campo DATACRIACAO */
-$VAR_PADRAO_DATACRIACAO = FORMATA_CAMPO($VAR_PADRAO_DATACRIACAO,$this->SISTEMA_['CONFIG']['SISTEMA']['GERAL']['DATA_HORA_EXIBICAO_FORMATO'],'data');
+$VAR_PADRAO_DATACRIACAO = FORMATA_CAMPO($VAR_PADRAO_DATACRIACAO, $this->SISTEMA_['CONFIG']['SISTEMA']['GERAL']['DATA_HORA_EXIBICAO_FORMATO'], 'data');
 
 /* Formata o campo DATA */
-$VAR_PADRAO_DATA = FORMATA_CAMPO($VAR_PADRAO_DATA,$this->SISTEMA_['CONFIG']['SISTEMA']['GERAL']['DATA_EXIBICAO_FORMATO'],'data');
+$VAR_PADRAO_DATA = FORMATA_CAMPO($VAR_PADRAO_DATA, $this->SISTEMA_['CONFIG']['SISTEMA']['GERAL']['DATA_EXIBICAO_FORMATO'], 'data');
 
 /* Formatar o campo VALOR */
-$VAR_PADRAO_VALOR = FORMATA_CAMPO($VAR_PADRAO_VALOR,$this->SISTEMA_['CONFIG']['SISTEMA']['GERAL']['MOEDA_SIMBOLO'],'moeda');
+$VAR_PADRAO_VALOR = FORMATA_CAMPO($VAR_PADRAO_VALOR, $this->SISTEMA_['CONFIG']['SISTEMA']['GERAL']['MOEDA_SIMBOLO'], 'moeda');
 
 /* Verifica se o registro foi desativado */
-if($VAR_PADRAO_REG_ATIVO=='1'){
-  $VAR_PADRAO_REG_ATIVO=true;
-  $VAR_REGISTRO_INATIVO="";
-}else{
-  $VAR_PADRAO_REG_ATIVO=false;
-  $VAR_REGISTRO_INATIVO=" <div class=\"form-group\">
+if ($VAR_PADRAO_REG_ATIVO == '1') {
+  $VAR_PADRAO_REG_ATIVO = true;
+  $VAR_REGISTRO_INATIVO = "";
+} else {
+  $VAR_PADRAO_REG_ATIVO = false;
+  $VAR_REGISTRO_INATIVO = " <div class=\"form-group\">
           <div class=\"col-sm-offset-5 col-sm-7\" id=\"DIV_LOG_INFO\">
             <b class=\"text-yellow\">$SysRtl_Registro_Inativo</b>
           </div>
@@ -52,58 +52,62 @@ if($VAR_PADRAO_REG_ATIVO=='1'){
 }
 // -------------------- PERMISSAO -----------------//
 $PERMISSAO_ = new permissao($this->SISTEMA_);
+$tmpListaAcoesPermissaoPadrao = $PERMISSAO_->ListaAcaoPermissaoEntidade($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'PADRAO');
 
-/* Permissão exibir detalhes do log do registro */
-$tmpLogAtividade="<i class=\"fa fa-info-circle\"></i>";            
-if($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'LOGATIVIDADE', 'INFORMACAO')){
-  $tmpLogAtividade="<a href=\"javascript::;\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=LOGATIVIDADE&SysEntidadeAcao=INFORMACAO&txtChaveRegistro=$VAR_PADRAO_CODIGO&TXT_LOGATIVIDADE_ENTIDADE=PADRAO&SID=$SistemaSessaoUID','','DIV_LOG_INFO',null)\">
+//print_r(array_values($tmpListaAcoesPermissaoPadrao));
+//die();
+
+/* Permissï¿½o exibir detalhes do log do registro */
+$tmpLogAtividade = "<i class=\"fa fa-info-circle\"></i>";
+if ($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'LOGATIVIDADE', 'INFORMACAO')) {
+  $tmpLogAtividade = "<a href=\"javascript::;\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=LOGATIVIDADE&SysEntidadeAcao=INFORMACAO&txtChaveRegistro=$VAR_PADRAO_CODIGO&TXT_LOGATIVIDADE_ENTIDADE=PADRAO&SID=$SistemaSessaoUID','','DIV_LOG_INFO',null)\">
               <i class=\"fa fa-info-circle\"></i>
             </a> ";
-}      
-/* Permissão exibir Data de Criação do registro e o Usuário que criou*/
+}
+/* Permissï¿½o exibir Data de Criaï¿½ï¿½o do registro e o Usuï¿½rio que criou*/
 $tmpLogVer = "";
-if($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'LOGATIVIDADE', 'VER'))
-$tmpLogVer = "<h6 class=\"text-muted\">
+if ($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'LOGATIVIDADE', 'VER'))
+  $tmpLogVer = "<h6 class=\"text-muted\">
             $tmpLogAtividade
             <i>$SysRtl_Padrao_Campos_USUARIO_NOME:</i><b> $VAR_PADRAO_USUARIO_NOME</b> - <i>$SysRtl_Padrao_Campos_DATACRIACAO:</i><b> $VAR_PADRAO_DATACRIACAO</b></h6>";
-  
 
-/* Permissão para o botão excluir */  
+
+/* Permissï¿½o para o botï¿½o excluir */
 $btn_excluir = "";
-if($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'PADRAO', 'EXCLUIR'))
+if (in_array('EXCLUIR', $tmpListaAcoesPermissaoPadrao))
   $btn_excluir = "<a href=\"javascript::;\" class=\"btn btn-sm btn-$SistemaLayoutCor\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=PADRAO&SysEntidadeAcao=EXCLUIR&SID=$SistemaSessaoUID&txtChaveRegistro=$VAR_PADRAO_CODIGO','','DIV_CONTEUDO',null)\"><i class=\"fa fa-trash-o\"></i> <b>$SysRtl_Btn_Excluir</b></a>";
 
-/* Permissão para o botão desativar */    
+/* Permissï¿½o para o botï¿½o desativar */
 $btn_desativar = "";
-if($VAR_PADRAO_REG_ATIVO)
-  if($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'PADRAO', 'DESATIVAR'))
+if ($VAR_PADRAO_REG_ATIVO)
+  if (in_array('DESATIVAR', $tmpListaAcoesPermissaoPadrao))
     $btn_desativar = "<a href=\"javascript::;\" class=\"btn btn-sm btn-$SistemaLayoutCor\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=PADRAO&SysEntidadeAcao=DESATIVAR&SID=$SistemaSessaoUID&txtChaveRegistro=$VAR_PADRAO_CODIGO','','DIV_CONTEUDO',null)\"><i class=\"fa fa-unlink\"></i> <b>$SysRtl_Btn_Desativar</b></a>";
 
-/* Permissão para o botão ativar */      
+/* Permissï¿½o para o botï¿½o ativar */
 $btn_ativar = "";
-if(!$VAR_PADRAO_REG_ATIVO)
-  if($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'PADRAO', 'ATIVAR'))
-    $btn_desativar = "<a href=\"javascript::;\" class=\"btn btn-sm btn-$SistemaLayoutCor\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=PADRAO&SysEntidadeAcao=ATIVAR&SID=$SistemaSessaoUID&txtChaveRegistro=$VAR_PADRAO_CODIGO','','DIV_CONTEUDO',null)\"><i class=\"fa fa-link\"></i> <b>$SysRtl_Btn_Ativar</b></a>";
+if (!$VAR_PADRAO_REG_ATIVO)
+  if (in_array('ATIVAR', $tmpListaAcoesPermissaoPadrao))
+    $btn_ativar = "<a href=\"javascript::;\" class=\"btn btn-sm btn-$SistemaLayoutCor\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=PADRAO&SysEntidadeAcao=ATIVAR&SID=$SistemaSessaoUID&txtChaveRegistro=$VAR_PADRAO_CODIGO','','DIV_CONTEUDO',null)\"><i class=\"fa fa-link\"></i> <b>$SysRtl_Btn_Ativar</b></a>";
 
-/* Permissão para o botão editar */      
+/* Permissï¿½o para o botï¿½o editar */
 $btn_editar = "";
-if($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'PADRAO', 'ALTERAR'))
+if (in_array('ALTERAR', $tmpListaAcoesPermissaoPadrao))
   $btn_editar = "<a href=\"javascript::;\" class=\"btn btn-sm btn-$SistemaLayoutCor\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=PADRAO&SysEntidadeAcao=ALTERAR&SID=$SistemaSessaoUID','','DIV_CONTEUDO','FORM_PADRAO_CONSULTAR')\"><i class=\"fa fa-edit\"></i> <b>$SysRtl_Btn_Editar</b></a>";
 
-/* Permissão para o botão novo */    
+/* Permissï¿½o para o botï¿½o novo */
 $btn_novo = "";
-if($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'PADRAO', 'INCLUIR'))
+if (in_array('INCLUIR', $tmpListaAcoesPermissaoPadrao))
   $btn_novo = "<a href=\"javascript::;\" class=\"btn btn-sm btn-$SistemaLayoutCor\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=PADRAO&SysEntidadeAcao=INCLUIR&SID=$SistemaSessaoUID','','DIV_CONTEUDO',null)\"><i class=\"fa fa-file-o\"></i> <b>$SysRtl_Btn_Novo</b></a>";
-  
-/* Permissão para o botão pesquisar */  
+
+/* Permissï¿½o para o botï¿½o pesquisar */
 $btn_pesquisar = "";
-if($PERMISSAO_->ChecarPermissao($this->SISTEMA_['SESSAO']['USUARIO']['CODIGO'], 'PADRAO', 'PESQUISAR'))
+if (in_array('PESQUISAR', $tmpListaAcoesPermissaoPadrao))
   $btn_pesquisar = "<a href=\"javascript::;\" class=\"btn btn-sm btn-$SistemaLayoutCor\" onclick=\"PesquisaDados('.?XMLHTML=true&SysEntidade=PADRAO&SysEntidadeAcao=PESQUISAR&SID=$SistemaSessaoUID','','DIV_CONTEUDO',null)\"><i class=\"fa fa-search\"></i> <b>$SysRtl_Btn_Pesquisar</b></a>";
 
 unset($PERMISSAO_);
-// -------------------- EXIBIÇÃO DO FORMULARIO -----------------//
+// -------------------- EXIBIï¿½ï¿½O DO FORMULARIO -----------------//
 
-/* Layout do Formulário */
+/* Layout do Formulï¿½rio */
 $this->SISTEMA_['SAIDA']['EXIBIR'] .= "
 <div class=\"col-md-8 col-sm-offset-2\">
   <div class=\"box box-$SistemaLayoutCor\" id=\"DIV_FORM_PADRAO\">
@@ -175,7 +179,7 @@ $this->SISTEMA_['SAIDA']['EXIBIR'] .= "
   </div>
 </div>";
 
-/* Layout JavaScript para manipulação do Layout */
+/* Layout JavaScript para manipulaï¿½ï¿½o do Layout */
 $this->SISTEMA_['SAIDA']['EXIBIR'] .= "
 <script language=\"text/javascript\">
   LBL_TITULO.innerText='$SysRtl_Padrao_Consultar_Cabecalho_Titulo';
@@ -183,4 +187,14 @@ $this->SISTEMA_['SAIDA']['EXIBIR'] .= "
   LBL_SUBTITULO_LOCAL.innerText='$SysRtl_Padrao_Consultar_Cabecalho_Subtitulo';
   LBL_ARVORE_LOCAL.innerHTML ='<a href=\"javascript::;\"><i class=\"fa $SysRtl_Padrao_Consultar_Cabecalho_Icone\"></i> $SysRtl_Padrao_Consultar_Cabecalho_Titulo</a>';
 </script>";
-?>
+
+
+/*
+$this->SISTEMA_['SAIDA']['FORMULARIO']['COMPONENTES']['LBL_TITULO']['TEXT'] = $Conteudo_Titulo;
+$this->SISTEMA_['SAIDA']['FORMULARIO']['COMPONENTES']['LBL_SUBTITULO']['TEXT'] = $Conteudo_Subtitulo;
+$this->SISTEMA_['SAIDA']['FORMULARIO']['COMPONENTES']['LBL_SUBTITULO_LOCAL']['TEXT'] = $Conteudo_Subtitulo;
+$this->SISTEMA_['SAIDA']['FORMULARIO']['COMPONENTES']['LBL_ARVORE_LOCAL']['TEXT'] = $Conteudo_ArvoreLocal;
+$this->SISTEMA_['SAIDA']['FORMULARIO']['BTNGRUPO']['LBL_ARVORE_LOCAL']['TEXT'] = $Conteudo_ArvoreLocal;
+$this->SISTEMA_['SAIDA']['FORMULARIO']['FORM']['LBL_ARVORE_LOCAL']['TEXT'] = $Conteudo_ArvoreLocal;
+
+*/
