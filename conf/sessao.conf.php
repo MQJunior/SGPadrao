@@ -16,118 +16,40 @@
  * @category     Sessao
  */
 
+$SISTEMA['INCLUDES']['CLASSES']['SESSAO'] = $SISTEMA['INCLUDES']['DIR']['LIB'] . 'class.sessao.lib.php'; // Define a LIB que gerencia sessao
 
-/** @var string $SISTEMA['INCLUDES']['CLASSES']['ARQUIVO'] - Define a LIB que gerencia sessao; */
-$SISTEMA['INCLUDES']['CLASSES']['SESSAO'] = $SISTEMA['INCLUDES']['DIR']['LIB'] . 'class.sessao.lib.php';
+$SISTEMA['CONFIG']['SESSAO']['GERAL']['PROCEDIMENTO'] = 'FINALIZAR'; // Define se a sessao deve continuar ou finalizar { CONTINUAR | FINALIZAR }
 
-/**
- * Define se a sessao deve continuar ou finalizar;
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['GERAL']['PROCEDIMENTO']
- * @name              $SISTEMA['CONFIG']['SESSAO']['GERAL']['PROCEDIMENTO']
- */
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['PROCEDIMENTO'] = 'FINALIZAR'; //  { CONTINUAR | FINALIZAR }
+$SISTEMA['CONFIG']['SESSAO']['GERAL']['NOME'] = 'SESSAO_SGPADRAO'; // Define o NOME da Sessao
 
-/**
- * Define o NOME da Sessao;
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['GERAL']['NOME']
- * @name              $SISTEMA['CONFIG']['SESSAO']['GERAL']['NOME']
- */
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['NOME'] = 'SESSAO_SGPADRAO';
-/**
- * Define o Tempo de Expiração da Sessão em Minutos;
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['GERAL']['TEMPO_EXPIRACAO']
- * @name              $SISTEMA['CONFIG']['SESSAO']['GERAL']['TEMPO_EXPIRACAO']
- */
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['TEMPO_EXPIRACAO'] = 100;
-/**
- * Define a Limitação;  (none/nocache/private/private_no_expire/public)
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['GERAL']['LIMITACAO']
- * @name              $SISTEMA['CONFIG']['SESSAO']['GERAL']['LIMITACAO']
- */
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['LIMITACAO'] = 'private';
-/**
- * Define o Local onde será salvo os arquivos de sessão caso não seja setado, será o diretório Definido no PHP.ini
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['GERAL']['LOCAL_DIR']
- * @name              $SISTEMA['CONFIG']['SESSAO']['GERAL']['LOCAL_DIR']
- */
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['LOCAL_DIR'] = 'D:/Desenvolvimento/SGPadrao/tmp/sessions/';
-/**
- * Define se a Sessão é autenticada (Protegida por senha)
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['GERAL']['SESSAO_AUTENTICACAO']
- * @name              $SISTEMA['CONFIG']['SESSAO']['GERAL']['SESSAO_AUTENTICACAO']
- */
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['SESSAO_AUTENTICACAO'] = true;
-/**
- * Define o comando a ser chamando para efetuar a autenticacao {ex: Logar}
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['GERAL']['COMANDO_AUTENTICACAO']
- * @name              $SISTEMA['CONFIG']['SESSAO']['GERAL']['COMANDO_AUTENTICACAO']
- *
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['COMANDO_AUTENTICACAO'] = 'LOGAR';
-/**
- * Define o comando a ser chamando para efetuar a autenticacao {ex: Logar}
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['GERAL']['COMANDO_AUTENTICACAO']
- * @name              $SISTEMA['CONFIG']['SESSAO']['GERAL']['COMANDO_AUTENTICACAO']
- *
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['COMANDO_LOGIN'] = 'LOGIN';
-*/
+$SISTEMA['CONFIG']['SESSAO']['GERAL']['TEMPO_EXPIRACAO'] = 100; // Define o Tempo de Expiração da Sessão em Minutos
 
-$SISTEMA['CONFIG']['SESSAO']['GERAL']['PALAVRA_CHAVE'] = 'SGPadrao';
+$SISTEMA['CONFIG']['SESSAO']['GERAL']['LIMITACAO'] = 'private'; // Define a Limitação (none/nocache/private/private_no_expire/public)
+
+$SISTEMA['CONFIG']['SESSAO']['GERAL']['LOCAL_DIR'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'tmp/sessions/'; // Define o Local onde será salvo os arquivos de sessão caso não seja setado, será o diretório Definido no PHP.ini
+
+$SISTEMA['CONFIG']['SESSAO']['GERAL']['SESSAO_AUTENTICACAO'] = true; // Define se a Sessão é autenticada (Protegida por senha)
+
+$SISTEMA['CONFIG']['SESSAO']['GERAL']['PALAVRA_CHAVE'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['NOME'];
 
 $SISTEMA['CONFIG']['SESSAO']['DATABASE'] = $SISTEMA['CONFIG']['SISTEMA']['DATABASE'];
 
-/**
- * Define o nome da tabela no banco de dados
- * @global  string    $SISTEMA['CONFIG']['SESSAO']['DATABASE']['ENTIDADE_DB']
- * @name              $SISTEMA['CONFIG']['SESSAO']['DATABASE']['ENTIDADE_DB']
- */
-$SISTEMA['CONFIG']['SESSAO']['DATABASE']['ENTIDADE_DB'] = 'TBL_SYS_SESSOES';
+$SISTEMA['CONFIG']['SESSAO']['DATABASE']['ENTIDADE_DB'] = 'TBL_SYS_SESSOES'; // Define o nome da tabela no banco de dados
 
-// tabela Usuarios
-$SISTEMA['CONFIG']['SESSAO']['DATABASE']['ENTIDADE_USUARIO'] = 'TBL_USUARIOS';
-
-
+$SISTEMA['CONFIG']['SESSAO']['DATABASE']['ENTIDADE_USUARIO'] = 'TBL_USUARIOS'; // tabela Usuarios
 
 $SISTEMA['SESSAO']['DATABASE']['DATA']['CODIGO'] = null;
-/**
- * Campos da tabela no banco de dados - USUARIO
- * @global  int   $SISTEMA['SESSAO']['DATABASE']['DATA']['USUARIO']
- * @name          $SISTEMA['SESSAO']['DATABASE']['DATA']['USUARIO']
- */
-$SISTEMA['SESSAO']['DATABASE']['DATA']['USUARIO'] = null;
-/**
- * Campos da tabela no banco de dados - SESSAO_ID
- * @global  int   $SISTEMA['SESSAO']['DATABASE']['DATA']['SESSAO_ID']
- * @name          $SISTEMA['SESSAO']['DATABASE']['DATA']['SESSAO_ID']
- */
-$SISTEMA['SESSAO']['DATABASE']['DATA']['SESSAO_ID'] = null;
-/**
- * Campos da tabela no banco de dados - IPCLIENTE
- * @global  int   $SISTEMA['SESSAO']['DATABASE']['DATA']['IPCLIENTE']
- * @name          $SISTEMA['SESSAO']['DATABASE']['DATA']['IPCLIENTE']
- */
-$SISTEMA['SESSAO']['DATABASE']['DATA']['IPCLIENTE'] = null;
-/**
- * Campos da tabela no banco de dados - DATAINICIO
- * @global  int   $SISTEMA['SESSAO']['DATABASE']['DATA']['DATAINICIO']
- * @name          $SISTEMA['SESSAO']['DATABASE']['DATA']['DATAINICIO']
- */
-$SISTEMA['SESSAO']['DATABASE']['DATA']['DATAINICIO'] = null;
-/**
- * Campos da tabela no banco de dados - DATAFIM
- * @global  int   $SISTEMA['SESSAO']['DATABASE']['DATA']['DATAFIM']
- * @name          $SISTEMA['SESSAO']['DATABASE']['DATA']['DATAFIM']
- */
-$SISTEMA['SESSAO']['DATABASE']['DATA']['DATAFIM'] = null;
-/**
- * Campos da tabela no banco de dados - USUARIOLOGIN
- * @global  int   $SISTEMA['SESSAO']['DATABASE']['DATA']['USUARIOLOGIN']
- * @name          $SISTEMA['SESSAO']['DATABASE']['DATA']['USUARIOLOGIN']
- */
-$SISTEMA['SESSAO']['DATABASE']['DATA']['USUARIOLOGIN'] = null;
-/**
- * Campos da tabela no banco de dados - SISTEMANOME
- * @global  int   $SISTEMA['SESSAO']['DATABASE']['DATA']['SISTEMANOME']
- * @name          $SISTEMA['SESSAO']['DATABASE']['DATA']['SISTEMANOME']
- */
-$SISTEMA['SESSAO']['DATABASE']['DATA']['SISTEMANOME'] = null;
-?>
+
+$SISTEMA['SESSAO']['DATABASE']['DATA']['USUARIO'] = null; // Campos da tabela no banco de dados - USUARIO
+
+$SISTEMA['SESSAO']['DATABASE']['DATA']['SESSAO_ID'] = null; // Campos da tabela no banco de dados - SESSAO_ID
+
+$SISTEMA['SESSAO']['DATABASE']['DATA']['IPCLIENTE'] = null; // Campos da tabela no banco de dados - IPCLIENTE
+
+$SISTEMA['SESSAO']['DATABASE']['DATA']['DATAINICIO'] = null; // Campos da tabela no banco de dados - DATAINICIO
+
+$SISTEMA['SESSAO']['DATABASE']['DATA']['DATAFIM'] = null; // Campos da tabela no banco de dados - DATAFIM
+
+$SISTEMA['SESSAO']['DATABASE']['DATA']['USUARIOLOGIN'] = null; // Campos da tabela no banco de dados - USUARIOLOGIN
+
+$SISTEMA['SESSAO']['DATABASE']['DATA']['SISTEMANOME'] = null; // Campos da tabela no banco de dados - SISTEMANOME

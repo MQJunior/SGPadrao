@@ -35,12 +35,13 @@ function getDatabaseCredentials()
     $localDir = readline("Local: \"" . $tmp_LocalDir . "\\\" <enter> ");
     if ($localDir == "")
         $localDir = $tmp_LocalDir . "\\";
+    $dirWWW = readline("Diretorio WWW: ");
     $host = readline("Host do banco de dados: ");
     $username = readline("Usuário do banco de dados: ");
     $password = readline("Senha do banco de dados: ");
     $name = readline("Nome do banco de dados: ");
 
-    return compact('nomeSistema', 'localDir', 'host', 'username', 'password', 'name');
+    return compact('nomeSistema', 'localDir', 'dirWWW', 'host', 'username', 'password', 'name');
 }
 
 function alterarLinhaArquivo($caminhoArquivo, $conteudoLinha, $novoValor)
@@ -81,15 +82,31 @@ function installSystem()
 
 
     // Alterar Nome do Sistema
-    alterarLinhaArquivo($extractPath . 'conf\\sistema.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'INFO\'][\'SISTEMA_NOME\']', $dbConfig['nomeSistema']);
-    alterarLinhaArquivo($extractPath . 'conf\\sistema.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'GERAL\'][\'NOME\']', $dbConfig['nomeSistema']);
+    alterarLinhaArquivo($extractPath . 'conf/sistema.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'INFO\'][\'SISTEMA_NOME\']', $dbConfig['nomeSistema']);
+    alterarLinhaArquivo($extractPath . 'conf/sistema.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'GERAL\'][\'NOME\']', $dbConfig['nomeSistema']);
     // Alterar Caminho do Sistema
-    alterarLinhaArquivo($extractPath . 'conf\\sistema.def.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'GERAL\'][\'LOCAL\']', $extractPath_);
+    alterarLinhaArquivo($extractPath . 'conf/sistema.def.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'GERAL\'][\'LOCAL\']', $extractPath_);
 
+    // Alterar Caminho do dir WWW
+    alterarLinhaArquivo($extractPath . 'conf/arquivo.conf.php', '$SISTEMA[\'CONFIG\'][\'ARQUIVO\'][\'LOCAL\'][\'EXIBIR\']', $extractPath_ . 'files/');
+
+    //Alterar Configuracoes do BD
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'NOME\']', $dbConfig['nomeSistema']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'HOSTNAME\']', $dbConfig['host']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'USERNAME\']', $dbConfig['username']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'PASSWORD\']', $dbConfig['password']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'DATABASENAME\']', $dbConfig['name']);
+
+    $fileInstallDB = $extractPath . 'install/installDB.php';
+    if (file_exists($fileInstallDB)) {
+        require ($fileInstallDB);
+    } else {
+        die(__FILE__ . ' > ARQUIVO: "' . $fileInstallDB . '" Não encontrado! < ' . __LINE__);
+    }
 
     print_r($dbConfig);
     die(__FILE__ . ' > Implementar aqui < ' . __LINE__);
-    
+
 
 
     echo "Sistema instalado com sucesso!\n";
