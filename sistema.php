@@ -18,11 +18,10 @@
 
 error_reporting(E_ALL);
 
-/**
- * @var string $SISTEMA['INCLUDES']['DIR']['CONFIG'] - Define o endereco do Diretorio conf;
- */
+//  Define o endereco do Diretorio conf;
 $SISTEMA['INCLUDES']['DIR']['CONFIG'] = 'D:/Desenvolvimento/SGPadrao/conf/';
-require_once($SISTEMA['INCLUDES']['DIR']['CONFIG'] . 'sistema.def.conf.php');
+
+require_once ($SISTEMA['INCLUDES']['DIR']['CONFIG'] . 'sistema.def.conf.php');
 //require_once($SISTEMA['INCLUDES']['CLASSES']['SISTEMA']);
 
 
