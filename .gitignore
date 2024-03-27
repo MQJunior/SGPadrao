@@ -1,7 +1,0 @@
-tmp/
-
-sistema.debug.json
-*.debug
-
-.vscode
-.git*
