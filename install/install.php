@@ -86,6 +86,7 @@ function installSystem()
     alterarLinhaArquivo($extractPath . 'conf/sistema.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'GERAL\'][\'NOME\']', $dbConfig['nomeSistema']);
     // Alterar Caminho do Sistema
     alterarLinhaArquivo($extractPath . 'conf/sistema.def.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'GERAL\'][\'LOCAL\']', $extractPath_);
+    alterarLinhaArquivo($extractPath . 'sistema.php', '$SISTEMA[\'INCLUDES\'][\'DIR\'][\'CONFIG\']', $extractPath_ . 'conf/');
 
     // Alterar Caminho do dir WWW
     alterarLinhaArquivo($extractPath . 'conf/arquivo.conf.php', '$SISTEMA[\'CONFIG\'][\'ARQUIVO\'][\'LOCAL\'][\'EXIBIR\']', $extractPath_ . 'files/');
