@@ -91,11 +91,11 @@ function installSystem()
     alterarLinhaArquivo($extractPath . 'conf/arquivo.conf.php', '$SISTEMA[\'CONFIG\'][\'ARQUIVO\'][\'LOCAL\'][\'EXIBIR\']', $extractPath_ . 'files/');
 
     //Alterar Configuracoes do BD
-    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'NOME\']', $dbConfig['nomeSistema']);
-    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'HOSTNAME\']', $dbConfig['host']);
-    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'USERNAME\']', $dbConfig['username']);
-    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'PASSWORD\']', $dbConfig['password']);
-    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'DATABASE\'][\'DATABASENAME\']', $dbConfig['name']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'DATABASE\'][\'NOME\']', $dbConfig['nomeSistema']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'DATABASE\'][\'HOSTNAME\']', $dbConfig['host']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'DATABASE\'][\'USERNAME\']', $dbConfig['username']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'DATABASE\'][\'PASSWORD\']', $dbConfig['password']);
+    alterarLinhaArquivo($extractPath . 'conf/db.conf.php', '$SISTEMA[\'CONFIG\'][\'SISTEMA\'][\'DATABASE\'][\'DATABASENAME\']', $dbConfig['name']);
 
     $fileInstallDB = $extractPath . 'install/installDB.php';
     if (file_exists($fileInstallDB)) {
