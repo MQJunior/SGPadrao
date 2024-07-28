@@ -18,6 +18,9 @@
 
 error_reporting(E_ALL);
 
+if (!isset($SISTEMA['SAIDA']['MODE']))
+    $SISTEMA['SAIDA']['MODE'] = 'api';
+
 //  Define o endereco do Diretorio conf;
 $SISTEMA['INCLUDES']['DIR']['CONFIG'] = 'D:/Desenvolvimento/SGPadrao/conf/';
 
