@@ -16,9 +16,9 @@
  * @category     DataBase
  */
 
-$SISTEMA['CONFIG']['SISTEMA']['DATABASE']['NOME'] = 'sgpadrao'; // Define o NOME da Base de Dados
+$SISTEMA['CONFIG']['SISTEMA']['DATABASE']['NOME'] = 'SGPadrao'; // Define o NOME da Base de Dados
 $SISTEMA['CONFIG']['SISTEMA']['DATABASE']['HOSTNAME'] = 'localhost'; // Define o ENDEREÇO do servidor DB
-$SISTEMA['CONFIG']['SISTEMA']['DATABASE']['USERNAME'] = 'SGPadrao'; // username
-$SISTEMA['CONFIG']['SISTEMA']['DATABASE']['PASSWORD'] = 'T1CuXi8I'; // Senha
-$SISTEMA['CONFIG']['SISTEMA']['DATABASE']['DATABASENAME'] = 'sgpadrao'; // Data Base Name
+$SISTEMA['CONFIG']['SISTEMA']['DATABASE']['USERNAME'] = 'sistema'; // username
+$SISTEMA['CONFIG']['SISTEMA']['DATABASE']['PASSWORD'] = 'wsx852357'; // Senha
+$SISTEMA['CONFIG']['SISTEMA']['DATABASE']['DATABASENAME'] = 'SGPadrao'; // Data Base Name
 $SISTEMA['CONFIG']['SISTEMA']['DATABASE']['TIPODB'] = '0'; // Define o tipo de Banco de Dados {0 - MySQL|1-Firebird}

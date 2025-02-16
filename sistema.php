@@ -22,9 +22,11 @@ if (!isset($SISTEMA['SAIDA']['MODE']))
     $SISTEMA['SAIDA']['MODE'] = 'api';
 
 //  Define o endereco do Diretorio conf;
-$SISTEMA['INCLUDES']['DIR']['CONFIG'] = 'D:/Desenvolvimento/SGPadrao/conf/';
+$SISTEMA['INCLUDES']['DIR']['CONFIG'] = '/sistema/sistemas/SGPadrao/conf/';
 
-require_once ($SISTEMA['INCLUDES']['DIR']['CONFIG'] . 'sistema.def.conf.php');
+require_once($SISTEMA['INCLUDES']['DIR']['CONFIG'] . 'sistema.def.conf.php');
+
+
 //require_once($SISTEMA['INCLUDES']['CLASSES']['SISTEMA']);
 
 

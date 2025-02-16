@@ -16,7 +16,7 @@
  */
 
 //error_reporting(E_ALL);
-$SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] = 'D:/Desenvolvimento/SGPadrao/'; // Define o local onde o sistema está sendo executado
+$SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] = '/sistema/sistemas/SGPadrao/'; // Define o local onde o sistema está sendo executado
 $SISTEMA['INCLUDES']['DIR']['LIB'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'lib/'; // Define o endereço da LIB
 $SISTEMA['INCLUDES']['DIR']['CONFIG'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'conf/'; // Define o endereço do Diretório conf
 $SISTEMA['INCLUDES']['DIR']['DEF'] = $SISTEMA['CONFIG']['SISTEMA']['GERAL']['LOCAL'] . 'def/'; // Define o endereço do Diretório def - definições e/ou constantes
