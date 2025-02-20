@@ -106,7 +106,7 @@ function LimparMenu($p_MENU)
 }
 
 
-require ($this->SISTEMA_['INCLUDES']['DIR']['DEF'] . "sgpadrao.menu.geral.def.php");
+require($this->SISTEMA_['INCLUDES']['DIR']['DEF'] . "sgpadrao.menu.geral.def.php");
 $MENU_ = new MenuSys($this->SISTEMA_);
 
 $VAR_MENU_GERAL = $MENU_->GerarVarMenu();
@@ -135,5 +135,3 @@ $this->SISTEMA_['ENTIDADE']['MENU']['VARS']['VAR_SISTEMA_MENU'] = $VAR_SISTEMA_M
 $this->SISTEMA_['ENTIDADE']['MENU']['VAR_MENU_GERAL'] = $VAR_MENU_GERAL;
 
 //die($VAR_SISTEMA_MENU);
-
-?>
