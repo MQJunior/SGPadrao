@@ -1,109 +1,145 @@
 
-# Projeto de Cadastro Centralizado e Integração com Sistemas Derivados
+# 📂 Projeto: Cadastro Centralizado com Integração de Sistemas Derivados
 
-## 🛠️ Objetivo do Projeto
+## 🎯 Objetivo
 
-Desenvolver uma base centralizada de cadastros de Pessoas, Endereços, Localizações (País, Estado, Cidade, Bairro, CEP), Documentos e Usuários, com autenticação única e validação de acesso para diferentes sistemas derivados.
+Desenvolver um sistema de Cadastro Centralizado para gestão de Pessoas, Localizações e Usuários, permitindo que múltiplos sistemas derivados (PDV, ERP, SGTopo, SGTrade, etc.) consumam essas informações via API REST, garantindo identidade única e integridade cadastral.
 
-Cada sistema derivado é responsável apenas pelo controle de sessão e permissões internas, enquanto o Cadastro Central valida a identidade dos usuários e fornece as informações cadastrais.
-
----
-
-## 🏛️ Papel de Cada Sistema
-
-| Sistema                     | Responsabilidade                                      |
-|-----------------------------|------------------------------------------------------|
-| Cadastro Central            | Gerenciar cadastros e autenticar usuários             |
-| Sistemas Derivados          | Gerar token de sessão, validar autorização no central |
-|                             | Definir permissões internas do usuário               |
+O Central NÃO gerencia clientes, fornecedores, técnicos ou funcionários. Esses cadastros são responsabilidade de cada sistema derivado, que pode opcionalmente vincular seus registros a uma Pessoa cadastrada no Central.
 
 ---
 
-## 🔐 Fluxo de Autenticação e Comunicação
+## 🏛️ Estrutura de Dados (Central vs Derivado)
 
-1. O usuário envia login e senha para o sistema derivado.
-2. O sistema derivado consulta o Cadastro Central:
-   - Envia `login`, `senha`, `sistema_origem`.
-   - Inclui o header `X-API-KEY` para identificação do derivado.
-3. O central valida:
-   - A API Key do sistema derivado.
-   - O login e senha do usuário.
+### Central (Global):
+- Pessoas (identidade única)
+- Usuários (autenticação)
+- Localizações (País, Estado, Cidade, Bairro, CEP, Logradouro)
+- Documentos (CPF, CNPJ, RG, etc.)
+
+### Derivados (Local):
+- Clientes → podem ou não vincular com Pessoa do Central
+- Fornecedores → podem ou não vincular com Pessoa
+- Técnicos → podem ou não vincular com Pessoa
+- Funcionários → podem ou não vincular com Pessoa
+- Contatos locais
+
+> Endereços são sempre definidos no derivado, conforme o papel daquela pessoa no sistema (cliente, fornecedor, técnico, etc.). O Central apenas provê a estrutura para compor os endereços.
+
+---
+
+## 🔐 Fluxo de Autenticação
+
+1. Usuário digita login e senha no derivado.
+2. Derivado envia a requisição para o Central: `POST /api/usuarios/autenticar`.
+3. Derivado inclui `X-API-KEY` (chave do sistema derivado) para validação.
+4. Central valida:
+   - API Key (se o sistema é autorizado).
+   - Login e senha do usuário.
    - Se o usuário está autorizado a acessar aquele sistema.
-4. Se tudo OK:
-   - O central responde com informações básicas do usuário.
-   - O derivado gera o token local (JWT, sessão PHP, etc.).
-5. O derivado controla a expiração e renovação do token local.
+5. Se autorizado, o derivado gera seu próprio token local (sessão ou JWT).
 
 ---
 
-## 🛡️ Controle de Acesso dos Sistemas Derivados (API Key)
+## 🛡️ Segurança no Fluxo de Consulta de Pessoas
 
-Cada sistema derivado possui:
-- Um identificador único (`sistema_origem`).
-- Uma `API Key` cadastrada no Central.
-- Status de ativo/inativo.
-
-Toda comunicação com o central deve incluir:
-```
-X-API-KEY: abc123xyz
-```
-
-Se o derivado não for reconhecido ou estiver inativo, o central bloqueia a comunicação.
-
----
-
-## 🧷 Modelo de Comunicação (Headers, Requisições e Respostas)
-
-### Requisição de Autenticação:
-```
-POST /api/usuarios/autenticar
-Headers:
-  Content-Type: application/json
-  X-API-KEY: abc123xyz
-Body:
-  {
-    "login": "joao",
-    "senha": "123456",
-    "sistema_origem": "SGTopo"
-  }
-```
-
-### Resposta (Sucesso):
-```json
-{
-  "status": "ok",
-  "usuario_codigo": 42,
-  "pessoa_codigo": 88,
-  "nome": "João da Silva",
-  "sistemas_autorizados": ["SGTopo", "SGTrade"],
-  "permitido_neste_sistema": true
-}
-```
-
-### Resposta (Erro):
-```json
-{
-  "status": "erro",
-  "mensagem": "Login ou senha inválidos ou sistema não autorizado"
-}
-```
+- Consulta não deve ser automática ao digitar CPF.
+- Exibir apenas dados mínimos para confirmar identidade:
+  ```
+  Pessoa encontrada:
+  Nome: João Paulo da Silva
+  CPF: ***.456.***-00
+  Telefone: (11) *****-9999
+  Deseja vincular esta pessoa ao cadastro local?
+  [Sim] [Não]
+  ```
+- Log de todas as consultas.
+- Limite de tentativas de consulta por usuário e sistema.
+- Controle de permissões (ex.: apenas administradores podem consultar pessoas).
 
 ---
 
-## 🟢 Checklist de Implementação
+## 🏗️ Tecnologia Recomendada (Central)
 
-- [ ] Cadastro de sistemas derivados com API Key no Central.
-- [ ] Endpoint de autenticação disponível no Central.
-- [ ] Controle de sessão/token gerado pelos derivados.
-- [ ] Validação de API Key em todas as chamadas.
-- [ ] Documentação das respostas esperadas.
-- [ ] Auditoria básica de tentativas de login.
+- Banco de Dados: PostgreSQL
+- Backend/API: PHP (Slim Framework, Lumen ou Vanilla PHP)
+- Autenticação via JWT ou OAuth2
+- Containerização recomendada (Docker)
+
+> PostgreSQL pela robustez, integridade relacional, suporte a JSONB e recursos avançados como índices GIN/BRIN, views materializadas e suporte a geolocalização (PostGIS, se necessário).
 
 ---
 
-## 🚀 Observações Futuras
+## 📋 Checklist de Implementação
 
-- Implementar 2FA opcional no Central.
-- Log de auditoria de acessos e autenticações.
-- Integração futura com login social (Google, Facebook).
-- Possibilidade de Single Sign-On (SSO).
+### 🔸 Cadastro Central
+- [ ] Estruturar tabelas de Pessoas, Usuários, Localizações, Documentos.
+- [ ] Cadastro de Sistemas Derivados com API Key e status ativo/inativo.
+- [ ] Implementar autenticação de usuários.
+- [ ] Desenvolver API RESTful com autenticação e validação de sistemas.
+
+### 🔸 Segurança e Auditoria
+- [ ] Logar todas as autenticações e consultas de pessoa.
+- [ ] Implementar limite de tentativas de consulta.
+- [ ] Exibir apenas dados mínimos na consulta inicial de CPF.
+- [ ] Permitir bloqueio de API Keys ou usuários suspeitos.
+
+### 🔸 Derivados
+- [ ] Gerar token local após autenticação no Central.
+- [ ] Validar permissão de acesso ao sistema derivado.
+- [ ] Gerenciar cadastros de Clientes, Fornecedores, Técnicos, Funcionários, etc.
+- [ ] Opcional: permitir vincular cadastros locais a Pessoas do Central.
+
+---
+
+## 🟢 Observações Finais
+
+- A arquitetura garante independência entre os sistemas derivados e centraliza apenas a identidade e a geografia.
+- Facilita a integração futura com novas tecnologias (criptoativos, SSO, 2FA, login social).
+- Permite evolução sem quebra de compatibilidade entre os sistemas.
+
+---
+
+---
+
+## 📧 E-mail como Dado Centralizado
+
+### 🎯 Definição
+
+O e-mail principal é considerado um **dado de identidade global** e pertence ao cadastro de Pessoas no sistema Central, assim como CPF ou CNPJ.
+
+- O e-mail é **único por Pessoa** no Central.
+- É utilizado para:
+  - Autenticação de usuários (login)
+  - Recuperação de senha
+  - Notificações globais
+  - Integração futura com login social (Google, Facebook, etc.)
+  - Possível autenticação de dois fatores (2FA)
+
+### 🛡️ Regras para E-mail:
+
+| Tipo de E-mail            | Onde é Armazenado             | Observação                                  |
+|---------------------------|------------------------------|----------------------------------------------|
+| E-mail principal (login, identidade) | Central (Pessoa)                  | Único por pessoa, usado em autenticação      |
+| E-mail para cobranças, financeiro, etc. | Derivado (ex.: clientes_emails) | Podem existir vários, são contextuais e locais|
+
+### 🧩 Exemplo:
+
+Pessoa (Central):
+```
+João Paulo da Silva
+CPF: 123.456.789-00
+E-mail: joao.silva@email.com
+```
+
+Cliente (PDV):
+```
+Cliente Código: 2001
+Pessoa Código: 88
+Nome Exibição: João - Carpinteiro
+E-mail cobrança: financeiro@carpintariajoao.com
+```
+
+> **Importante:** O e-mail principal é sempre centralizado, mas cada derivado pode armazenar e-mails adicionais específicos conforme suas necessidades operacionais.
+
+---
